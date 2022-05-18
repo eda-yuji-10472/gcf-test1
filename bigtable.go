@@ -19,7 +19,6 @@ package bigtable
 
 import (
 	"context"
-	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -42,8 +41,6 @@ var clientOnce sync.Once
 // BigtableRead is an example of reading Bigtable from a Cloud Function.
 func BigtableRead(w http.ResponseWriter, r *http.Request) {
 
-	project := flag.String("striped-proxy-187410", "", "The Google Cloud Platform project ID. Required.")
-	instance := flag.String("test-instance", "", "The Google Cloud Bigtable instance ID. Required.")
 	ctx := context.Background()
 
 	clientOnce.Do(func() {
