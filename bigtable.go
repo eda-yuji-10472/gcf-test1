@@ -99,7 +99,7 @@ func BigtableRead(w http.ResponseWriter, r *http.Request) {
 	log.Printf("\t%s = %s\n", rowKeys[0], string(row[columnFamilyName][0].Value))
 	// [END bigtable_hw_get_by_key]
 
-	tbl := client.Open("test-table")
+	tbl = client.Open("test-table")
 
 	err = tbl.ReadRows(r.Context(), bigtable.PrefixRange("phone#"),
 		func(row bigtable.Row) bool {
