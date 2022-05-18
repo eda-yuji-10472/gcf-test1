@@ -44,6 +44,7 @@ func BigtableRead(w http.ResponseWriter, r *http.Request) {
 
 	project := flag.String("striped-proxy-187410", "", "The Google Cloud Platform project ID. Required.")
 	instance := flag.String("test-instance", "", "The Google Cloud Bigtable instance ID. Required.")
+	ctx := context.Background()
 
 	clientOnce.Do(func() {
 		// Declare a separate err variable to avoid shadowing client.
@@ -101,7 +102,7 @@ func BigtableRead(w http.ResponseWriter, r *http.Request) {
 	log.Printf("\t%s = %s\n", rowKeys[0], string(row[columnFamilyName][0].Value))
 	// [END bigtable_hw_get_by_key]
 
-	err := tbl.ReadRows(r.Context(), bigtable.PrefixRange("phone#"),
+	err = tbl.ReadRows(r.Context(), bigtable.PrefixRange("phone#"),
 		func(row bigtable.Row) bool {
 			osBuild := ""
 			for _, col := range row["stats_summary"] {
