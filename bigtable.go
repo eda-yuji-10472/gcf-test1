@@ -49,7 +49,7 @@ func BigtableRead(w http.ResponseWriter, r *http.Request) {
 	clientOnce.Do(func() {
 		// Declare a separate err variable to avoid shadowing client.
 		var err error
-		client, err = bigtable.NewClient(context.Background(), *project, *instance)
+		client, err = bigtable.NewClient(context.Background(), "striped-proxy-187410", "test-instance")
 		if err != nil {
 			http.Error(w, "Error initializing client", http.StatusInternalServerError)
 			log.Printf("bigtable.NewClient: %v", err)
@@ -58,7 +58,7 @@ func BigtableRead(w http.ResponseWriter, r *http.Request) {
 	})
 
 	var greetings = []string{"Hello World!", "Hello Cloud Bigtable!", "Hello golang!"}
-	tbl := client.Open(r.Header.Get("tableID"))
+	tbl := client.Open("test-table")
 
 	muts := make([]*bigtable.Mutation, len(greetings))
 	rowKeys := make([]string, len(greetings))
